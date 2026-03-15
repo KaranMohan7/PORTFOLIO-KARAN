@@ -1,3 +1,7 @@
+export const PUBLIC_IMAGE_URL="https://res.cloudinary.com/djxinb7ul/image/upload/v1768043786/me_blur_ktajnh.jpg"
+
+export const PUBLIC_ABOUT_IMAGE_URL="https://res.cloudinary.com/djxinb7ul/image/upload/c_crop,ar_1:1/v1768044571/WhatsApp_Image_2025-12-13_at_3.49.30_PM_1_glqkqd.jpg"
+
 export const projectData = [
   {
     _id: "docto",

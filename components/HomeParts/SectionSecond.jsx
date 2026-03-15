@@ -7,6 +7,8 @@ import { SplitText } from "gsap/SplitText";
 import Underlinedbutton from "../Underlinedbutton";
 import { appcontext } from "@/app/context/CursorProvider";
 import Link from "next/link";
+import { PUBLIC_IMAGE_URL } from "@/utils/dummyData";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,7 +18,7 @@ const SectionSecond = () => {
   const parallexTextRef = useRef(null);
   const aboutRef = useRef(null);
   const { cursor } = useContext(appcontext);
-  const Mepicture = process.env.NEXT_PUBLIC_IMAGE_URL;
+  const Mepicture = PUBLIC_IMAGE_URL;
 
   useEffect(() => {
     if (!sectionRef.current || !parallexTextRef.current) return;

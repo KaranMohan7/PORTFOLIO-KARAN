@@ -11,10 +11,11 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import StylishBarSecond from "@/components/ui/StylishBarSecond.jsx";
+import { PUBLIC_ABOUT_IMAGE_URL } from "../../../utils/dummyData.js";
 
 gsap.registerPlugin(ScrollTrigger);
 export default function About() {
-  const AboutImage = process.env.NEXT_PUBLIC_ABOUT_IMAGE_URL;
+  const AboutImage = PUBLIC_ABOUT_IMAGE_URL;
   const expDescRef = useRef(null);
   const whatIDoRef = useRef(null);
   const myJourneyRef = useRef(null)
