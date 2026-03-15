@@ -12,6 +12,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import StylishBarSecond from "@/components/ui/StylishBarSecond.jsx";
 import { PUBLIC_ABOUT_IMAGE_URL } from "../../../utils/dummyData.js";
+import Link from "next/link.js";
 
 gsap.registerPlugin(ScrollTrigger);
 export default function About() {
@@ -155,7 +156,7 @@ export default function About() {
             interactions. I believe good interfaces are felt more than they’re
             noticed.
           </p>
-          <Button text={"Say Hello !"} />
+          <Link href={'/contact'}><Button text={"Say Hello !"} /></Link>
         </div>
         <div className="ml-auto">
           <Imagecontainer Mepicture={AboutImage} width={580} height={100} />

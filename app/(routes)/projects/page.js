@@ -27,7 +27,7 @@ useEffect(() => {
       filter: "blur(0px)",
       duration: 1.4,
       ease: "power4.out",
-      delay: 1.2,
+      delay: 1.1,
     }
   );
 
@@ -39,7 +39,6 @@ useEffect(() => {
       opacity: 1,
       duration: 0.8,
       ease: "power3.out",
-      delay: 1.4, // header ke baad
     }
   );
 }, []);

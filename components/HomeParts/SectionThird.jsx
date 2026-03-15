@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useContext, useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/all";
 import Button from "../ui/Button";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 const SectionThird = () => {
@@ -123,8 +124,9 @@ gsap.fromTo(
             <br />
             <span className="font-bold">PROJECTS</span>
           </p>
-
+<Link href={'/projects'}>
     <Button text={"Projects Page"} />
+    </Link>
         </div>
       </div>
     </div>
