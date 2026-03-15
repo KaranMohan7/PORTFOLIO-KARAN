@@ -6,7 +6,6 @@ import { appAndAnimation } from "./context/AnimationAndLogicProvider";
 import SectionSecond from "@/components/HomeParts/SectionSecond";
 import SectionThird from "@/components/HomeParts/SectionThird";
 import SectionFourth from "@/components/HomeParts/SectionFourth";
-import SectionFifth from "@/components/HomeParts/SectionFifth";
 import ServicesSection from "@/components/ServicesSection";
 
 

@@ -130,7 +130,8 @@ export const techStack = [
 ];
 
 export const experience = [
-  { text: "AMRUTAM", duration: "OCT 2025 - CURRENT", profile: "FRONTEND DEVELOPER" },
+  { text: "AMRUTAM", duration: "FEB 2026 - CURRENT", profile: "FRONTEND DEVELOPER" },
+  { text: "AMRUTAM", duration: "OCT 2025 - FEB 2026", profile: "FRONTEND DEVELOPER INTERN" },
   { text: "ANUSA WELLNESS", duration: "JULY 2025 - AUG 2025", profile: "FREELANCE FRONTEND DEVELOPER" }
 ]
 
@@ -149,7 +150,6 @@ export const educationData = [
 ];
 
 export const socials = [
-  { name: "Instagram", href: "" },
-  { name: "LinkedIn", href: "" },
-  { name: "GitHub", href: "" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/karan-mohan-talwar-aaa731295/" },
+  { name: "GitHub", href: "https://github.com/KaranMohan7" },
 ];

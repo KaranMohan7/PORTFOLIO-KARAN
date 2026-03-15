@@ -116,8 +116,8 @@ useEffect(() =>  {
             ];
 
             return (
-              <div className="border-white border-b-2 ">
-              <Link href={`/projects/${item._id}`} key={index} >
+              <div key={index} className="border-white border-b-2 ">
+              <Link href={`/projects/${item._id}`}  >
                 <FlowingMenu items={RequiredItems} />
               </Link>
               </div>
