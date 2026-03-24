@@ -44,12 +44,12 @@ const HeroText = ({ startAnimation }) => {
   }, [startAnimation]);
 
   return (
-    <div className="text-white mt-24 px-4 md:px-0">
+    <div className="text-white mt-12 md:mt-24 px-3 md:px-0">
       {/* MAIN TITLE */}
       <p
         ref={textOneRef}
         style={{ opacity: 0 }}
-        className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight text-nowrap"
+        className="text-[3.5rem] md:text-7xl lg:text-8xl font-extrabold leading-tight text-nowrap"
       >
         I'm Karan <br /> Mohan Talwar
       </p>

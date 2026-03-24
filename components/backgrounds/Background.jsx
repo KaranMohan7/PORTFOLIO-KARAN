@@ -15,11 +15,9 @@ function MetallicTorus({ scale, progress }) {
   useFrame(() => {
     if (!mesh.current) return;
 
-    // 🔁 Idle animation (always running)
     base.current.y += 0.003;
     base.current.x += 0.002;
 
-    // 📜 Scroll influence
     const scrollY = progress.current * Math.PI * 2;
     const scrollX = progress.current * Math.PI * 0.4;
 
@@ -47,11 +45,9 @@ function MetallicCylinder({ position, scale, progress }) {
   useFrame(() => {
     if (!mesh.current) return;
 
-    // Idle
     base.current.y += 0.002;
     base.current.x += 0.001;
 
-    // Scroll
     const scrollY = progress.current * Math.PI * 1.4;
     const scrollX = progress.current * Math.PI * 0.3;
 
@@ -74,16 +70,14 @@ function MetallicCylinder({ position, scale, progress }) {
 
 function MetallicCone({ position, scale, progress }) {
   const mesh = useRef();
-  const base = useRef({ y: 0, z: 0, x: -Math.PI / 2, });
+  const base = useRef({ y: 0, z: 0, x: -Math.PI / 2 });
 
   useFrame(() => {
     if (!mesh.current) return;
 
-    // Idle
     base.current.y += 0.0015;
     base.current.z += 0.001;
 
-    // Scroll
     const scrollY = progress.current * Math.PI;
     const scrollZ = progress.current * 0.5;
 
@@ -108,7 +102,6 @@ export default function Background() {
   const [screen, setScreen] = useState("desktop");
   const scrollProgress = useRef(0);
 
-  // Responsive
   useEffect(() => {
     const check = () => {
       const w = window.innerWidth;
@@ -121,7 +114,6 @@ export default function Background() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Scroll → progress
   useEffect(() => {
     gsap.to(scrollProgress, {
       current: 1,
@@ -139,11 +131,11 @@ export default function Background() {
   const isTablet = screen === "tablet";
 
   return (
-    <div className="fixed inset-0 -z-10 ">
+    <div className="fixed inset-0 -z-10">
       <Canvas
         camera={{
-          position: isMobile ? [0, 0, 12] : isTablet ? [0, 0, 10] : [0, 0, 8],
-          fov: isMobile ? 60 : isTablet ? 50 : 45,
+          position: isMobile ? [0, 0, 9] : isTablet ? [0, 0, 10] : [0, 0, 8],
+          fov: isMobile ? 65 : isTablet ? 50 : 45,
         }}
       >
         <ambientLight intensity={0.5} />
@@ -151,35 +143,38 @@ export default function Background() {
         <directionalLight position={[-5, -3, -5]} intensity={0.6} />
         <Environment preset="city" />
 
-        <Float speed={0.4} floatIntensity={0.2}>
+        {/* CENTER */}
+        <Float speed={0.4} floatIntensity={isMobile ? 0.3 : 0.2}>
           <MetallicTorus
-            scale={isMobile ? 0.5 : isTablet ? 0.55 : 0.6}
+            scale={isMobile ? 0.8 : isTablet ? 0.7 : 0.6}
             progress={scrollProgress}
           />
         </Float>
 
-        <Float speed={0.6} floatIntensity={0.3}>
+        {/* LEFT */}
+        <Float speed={0.6} floatIntensity={isMobile ? 0.35 : 0.3}>
           <MetallicCylinder
-            scale={isMobile ? 0.5 : isTablet ? 0.7 : 0.7}
+            scale={isMobile ? 0.7 : 0.7}
             position={
               isMobile
-                ? [-2.2, 3, -2]
+                ? [-2.8, 3.2, -2] // ✅ visible + spaced
                 : isTablet
-                ? [-2.8, 2.7, -2]
+                ? [-3.2, 2.7, -2]
                 : [-7, 3, -2]
             }
             progress={scrollProgress}
           />
         </Float>
 
-        <Float speed={0.5} floatIntensity={0.25}>
+        {/* RIGHT */}
+        <Float speed={0.5} floatIntensity={isMobile ? 0.3 : 0.25}>
           <MetallicCone
-            scale={isMobile ? 0.5 : isTablet ? 0.75 : 0.8}
+            scale={isMobile ? 0.8 : isTablet ? 0.75 : 0.8}
             position={
               isMobile
-                ? [2.2, 1.5, -2]
+                ? [2.8, 2, -2] // ✅ visible + spaced
                 : isTablet
-                ? [2.8, 1.5, -2]
+                ? [3.2, 1.5, -2]
                 : [7, 1.5, -2]
             }
             progress={scrollProgress}

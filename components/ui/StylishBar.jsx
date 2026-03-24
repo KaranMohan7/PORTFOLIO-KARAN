@@ -26,28 +26,36 @@ const StylishBar = ({ item, exp = false }) => {
   }, []);
 
   return (
-    <div className="py-2">
+    <div className="py-3 sm:py-4">
       {/* divider */}
-      <div className="w-full h-px bg-[#343434]" /> 
+      <div className="w-full h-px bg-[#343434]" />
 
-      <div className="flex flex-wrap items-center justify-between pt-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4">
+        
         {/* LEFT : animated text */}
-        <div ref={wrapperRef} className="overflow-hidden w-[70%]">
+        <div ref={wrapperRef} className="overflow-hidden w-full sm:w-[65%]">
           <p
             ref={textRef}
-            className="text-[8vw] md:text-[6vw] whitespace-nowrap"
+            className="
+              text-[9vw] 
+              sm:text-[7vw] 
+              md:text-[5vw] 
+              lg:text-[4vw] 
+              leading-[1.1]
+              wrap-break-word
+            "
           >
             {item.text}
           </p>
         </div>
 
-        {/* RIGHT : static tags */}
+        {/* RIGHT : tags */}
         {exp && (
-          <div className="flex items-center gap-3 shrink-0">
-            <span className="border border-zinc-600 text-white/80 rounded-full px-4 py-1 text-xs tracking-wide">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
+            <span className="border border-zinc-600 text-white/80 rounded-full px-3 sm:px-4 py-1 text-[10px] sm:text-xs tracking-wide">
               {item.profile}
             </span>
-            <span className="border border-zinc-600 text-white/60 rounded-full px-4 py-1 text-xs tracking-wide">
+            <span className="border border-zinc-600 text-white/60 rounded-full px-3 sm:px-4 py-1 text-[10px] sm:text-xs tracking-wide">
               {item.duration}
             </span>
           </div>

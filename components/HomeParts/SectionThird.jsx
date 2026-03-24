@@ -85,7 +85,7 @@ gsap.fromTo(
 }, []);
 
   return (
-    <div className="w-full h-[75vh] mt-24  px-4">
+    <div className="w-full h-[60vh] mt-24  px-4">
       <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
         {/* IMAGE + TEXT WRAPPER */}
         <div className="w-full max-w-[1170px]">

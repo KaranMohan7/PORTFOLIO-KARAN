@@ -174,7 +174,7 @@ const Nav = () => {
           "
         >
           {/* RIGHT COLUMN (MENU LINKS) */}
-          <div className="flex flex-col items-start justify-center space-y-6 ">
+          <div className="flex flex-col items-start justify-center space-y-6 pt-5 md:pt-0">
             {navItems.map((item, index) => (
               <div
                 key={index}
@@ -229,7 +229,7 @@ const Nav = () => {
           </div>
 
           {/* LEFT COLUMN */}
-          <div className="flex flex-col justify-end h-full mt-40 md:mt-16 lg:mt-16 text-white">
+          <div className="flex flex-col justify-end h-full mt-40 md:mt-16 lg:mt-16 text-white pb-5 md:pb-0">
             {/* SOCIAL ICONS */}
             <div
               ref={socialRef}

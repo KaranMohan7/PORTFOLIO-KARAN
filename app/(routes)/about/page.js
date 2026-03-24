@@ -167,7 +167,7 @@ export default function About() {
         <p className="text-sm md:text-lg py-5 tracking-wide">WHAT I DO</p>
         <p
           ref={whatIDoRef}
-          className="text-2xl md:text-5xl py-3 w-full font-semibold leading-16"
+          className="text-2xl md:text-5xl py-3 w-full font-semibold leading-12 lg:leading-16"
         >
           I build reliable and user focused web applications with a frontend
           focused approach, emphasizing clean, responsive, and intuitive
@@ -177,7 +177,7 @@ export default function About() {
         </p>
       </div>
 
-      <div className="mt-12">
+      <div className="md:mt-12">
         <p className="text-sm md:text-lg py-5 tracking-wide">TECH STACK</p>
         {techStack.map((item, index) => (
           <div key={index}>
@@ -208,11 +208,11 @@ export default function About() {
             </div>
           ))}
         </div>  */}
-        <div className="py-14">
+        <div className="py-12">
           <p className="text-lg md:text-2xl py-5 tracking-wide">{"</ >"}</p>
           <p
             ref={myJourneyRef}
-            className="text-2xl md:text-5xl py-3 w-full font-semibold leading-16"
+            className="text-2xl md:text-5xl py-2 w-full font-semibold leading-16"
           >
             My journey is defined less by milestones and more by momentum. I
             learn by building, breaking, and refining. Each project represents a
