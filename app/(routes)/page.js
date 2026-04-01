@@ -2,7 +2,7 @@
 import Background from "@/components/backgrounds/Background";
 import HeroText from "@/components/HeroText";
 import React, { useContext, useState } from "react";
-import { appAndAnimation } from "./context/AnimationAndLogicProvider";
+import { appAndAnimation } from "../context/AnimationAndLogicProvider";
 import SectionSecond from "@/components/HomeParts/SectionSecond";
 import SectionThird from "@/components/HomeParts/SectionThird";
 import SectionFourth from "@/components/HomeParts/SectionFourth";

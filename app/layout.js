@@ -25,9 +25,7 @@ export default function RootLayout({ children }) {
         <AnimationAndLogicProvider>
           <LenisProvider>
           <CursorProvider>
-            <div className="flex justify-end px-4 lg:px-7 ">
-              <Nav />
-            </div>
+
             {/* Page content with loader control */}
             <AppWrapper>{children}</AppWrapper>
           <Footer />
