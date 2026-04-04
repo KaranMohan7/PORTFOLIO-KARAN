@@ -16,10 +16,12 @@ export async function POST(req) {
         const images = formData.getAll("images");
 
         if (!projectData) {
-            return NextResponse.json({ status: 400 }, { success: false, message: "ProjectData not provided" });
+            return NextResponse.json( { success: false, message: "ProjectData not provided" },
+  { status: 400 });
         }
-        if (!mainImage || shortImage) {
-            return NextResponse.json({ status: 400 }, { success: false, message: "images not found" });
+        if (!mainImage || !shortImage) {
+            return NextResponse.json( { success: false, message: "Images not found" },
+  { status: 400 });
         }
         const parsedData = JSON.parse(projectData);
         
@@ -39,14 +41,14 @@ export async function POST(req) {
         })
 
         if (!createdProject) {
-            return NextResponse.json({ status: 401 }, { success: false, message: "Something went wrong while creating Project" })
+            return NextResponse.json({ success: false, message: "Something went wrong while creating Project" }, { status: 401 })
         }
 
-        return NextResponse.json({ status: 200 }, { success: true, message: "Project Created Successfully" })
+        return NextResponse.json( { success: true, message: "Project Created Successfully" }, { status: 200 })
 
 
     } catch (error) {
-        return NextResponse.json({ status: 500 }, { success: false, message: error.message })
+        return NextResponse.json( { success: false, message: error.message }, { status: 500 })
     }
 }
 
@@ -55,9 +57,9 @@ export async function GET(req) {
     try {
         await connectDB();
         const allProjectsData = await projectModel.find();
-        return NextResponse.json({ status: 200 }, { success: true, message: "All projects retrieved successfully", data: allProjectsData });
+        return NextResponse.json({ success: true, message: "All projects retrieved successfully", data: allProjectsData }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ status: 500 }, { success: false, message: error.message })
+        return NextResponse.json( { success: false, message: error.message }, { status: 500 })
     }
 }
 

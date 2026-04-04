@@ -10,7 +10,10 @@ export async function POST(req, { params }) {
     try {
         await connectDB();
         connectCloudinary();
-        const projectId = params.id;
+               const { id } = await params;
+                       if (!id) {
+            return NextResponse.json({ success: false, message: "ID not found" }, { status: 404 });
+        }
         const formData = await req.formData();
         const projectData = formData.get("projectData");
         const shortImage = formData.get("shortImage");
@@ -18,7 +21,7 @@ export async function POST(req, { params }) {
         const images = formData.getAll("images");
 
         if (!projectData) {
-            return NextResponse.json({ status: 404 }, { success: false, message: "ProjectData not provided" });
+            return NextResponse.json({ success: false, message: "ProjectData not provided" },{ status: 404 });
         }
         const parsedData = JSON.parse(projectData);
         let updatedFields = { ...parsedData };
@@ -40,46 +43,52 @@ export async function POST(req, { params }) {
         }
 
         const updatedData = await projectModel.findByIdAndUpdate(
-            projectId,
+            id,
             updatedFields,
             { new: true }
         );
         if (!updatedData) {
-            return NextResponse.json({ status: 401 }, { success: false, message: "Something went wrong while updating Project" })
+            return NextResponse.json({ success: false, message: "Something went wrong while updating Project" },{ status: 401 })
         }
 
-        return NextResponse.json({ status: 200 }, { success: true, message: "Project Updated Successfully" });
+        return NextResponse.json({ success: true, message: "Project Updated Successfully" }, { status: 200 });
 
     } catch (error) {
-        return NextResponse.json({ status: 500 }, { success: false, message: error.message })
+        return NextResponse.json( { success: false, message: error.message },{ status: 500 })
     }
 }
 
 export async function GET(req, { params }) {
     try {
         await connectDB();
-        const projectId = params.id;
-        const getSingleData = await projectModel.findById(projectId);
-        if (!getSingleData) {
-            return NextResponse.json({ status: 404 }, { success: false, message: "Data not found" });
+        const { id } = await params;
+        if (!id) {
+            return NextResponse.json({ success: false, message: "ID not found" }, { status: 404 });
         }
-        return NextResponse.json({ status: 200 }, { success: true, message: "Retrieved Single Project Successfully", data: getSingleData });
+        const getSingleData = await projectModel.findById(id);
+        if (!getSingleData) {
+            return NextResponse.json({ success: false, message: "Data not found" }, { status: 404 });
+        }
+        return NextResponse.json({ success: true, message: "Retrieved Single Project Successfully", data: getSingleData }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ status: 500 }, { success: false, message: error.message })
+        return NextResponse.json({ success: false, message: error.message }, { status: 500 })
     }
 }
 
 
-export async function DELETE(req, {params}){
+export async function DELETE(req, { params }) {
     try {
-         await connectDB();
-        const projectId = params.id;
-        const deleteData = await projectModel.findByIdAndDelete(projectId);
-        if(!deleteData){
-            return NextResponse.json({status: 401}, { success: false, message: "Can't be deleted" })
+        await connectDB();
+        const { id } = await params;
+        if (!id) {
+            return NextResponse.json({ success: false, message: "ID not found" }, { status: 404 });
         }
-        return NextResponse.json({status: 200}, {success: true, message: "Project Deleted Successfully"})
+        const deleteData = await projectModel.findByIdAndDelete(id);
+        if (!deleteData) {
+            return NextResponse.json({ success: false, message: "Can't be deleted" }, { status: 401 })
+        }
+        return NextResponse.json({ success: true, message: "Project Deleted Successfully" }, { status: 200 })
     } catch (error) {
-            return NextResponse.json({ status: 500 }, { success: false, message: error.message })
+        return NextResponse.json({ success: false, message: error.message }, { status: 500 })
     }
 }

@@ -1,9 +1,15 @@
 "use client";
+import { getSingleProject, updateProjects } from "@/utils/apiFunctions";
+import { useParams, useRouter } from "next/navigation";
+
 import React, { useEffect, useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query"
 import toast from "react-hot-toast";
 
-const Createproject = () => {
 
+const updateProject = () => {
+  
+  const router = useRouter()
   const [form, setForm] = useState({
     shortName: "",
     name: "",
@@ -22,6 +28,7 @@ const Createproject = () => {
     link: "",
   });
   const [errors, setErrors] = useState({});
+  
 
   const [preview, setPreview] = useState({
     mainImage: "",
@@ -30,6 +37,14 @@ const Createproject = () => {
   });
 
   const [loading, setLoading] = useState(false);
+
+  const { id } = useParams();
+
+const { data } = useQuery({
+  queryKey: ["project", id],
+  queryFn: () => getSingleProject(id),
+  enabled: !!id,
+});
 
   // handle input
   const handleChange = (e) => {
@@ -121,11 +136,12 @@ const validate = () => {
     newErrors.description = "Description is required";
   }
 
-  if (!form.mainImage) {
+  // ❗ CHANGE HERE
+  if (!form.mainImage && !preview.mainImage) {
     newErrors.mainImage = "Main image is required";
   }
 
-  if (!form.shortImage) {
+  if (!form.shortImage && !preview.shortImage) {
     newErrors.shortImage = "Short image is required";
   }
 
@@ -150,33 +166,6 @@ const validate = () => {
   return newErrors;
 };
 
-const resetForm = () => {
-  setForm({
-    shortName: "",
-    name: "",
-    description: "",
-    mainImage: null,
-    shortImage: null,
-    techStack: [""],
-    type: {
-      typeName: "",
-      typeCategory: "",
-      typeDateStack: "",
-    },
-    detailDescription: [""],
-    images: [],
-    featured: false,
-    link: "",
-  });
-
-  setPreview({
-    mainImage: "",
-    shortImage: "",
-    images: [],
-  });
-
-  setErrors({});
-};
 
   // submit
   const handleSubmit = async (e) => {
@@ -191,20 +180,21 @@ const resetForm = () => {
 
   try {
     setLoading(true);
-    setErrors({}); // clear errors
 
     const formData = new FormData();
     const { mainImage, shortImage, images, ...rest } = form;
 
     formData.append("projectData", JSON.stringify(rest));
-    formData.append("mainImage", mainImage);
-    formData.append("shortImage", shortImage);
+
+    // ❗ only append if new file selected
+    if (mainImage) formData.append("mainImage", mainImage);
+    if (shortImage) formData.append("shortImage", shortImage);
 
     images.forEach((img) => {
       formData.append("images", img);
     });
 
-    const res = await fetch("/api/projects", {
+    const res = await fetch(`/api/projects/${id}`, {
       method: "POST",
       body: formData,
     });
@@ -212,24 +202,56 @@ const resetForm = () => {
     const data = await res.json();
 
     if (data.success) {
-      toast.success(data?.message)
-      resetForm();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      toast.success( data?.message ||"Project Updated ✅");
+      router.push("/admin/list-project")
+       // redirect
     } else {
-      toast.error(data.message);
-          resetForm();
+      toast.error(data?.message);
     }
+
   } catch (err) {
-    toast.error(err);
+    toast.error("Update failed ❌", err?.message);
   } finally {
     setLoading(false);
   }
 };
 
+useEffect(() => {
+  if (!data?.data) return;
+
+  const project = data.data;
+
+  setForm({
+    shortName: project.shortName || "",
+    name: project.name || "",
+    description: project.description || "",
+    mainImage: null, // ❗ file nahi set karte
+    shortImage: null,
+    techStack: project.techStack || [""],
+    type: {
+      typeName: project.type?.typeName || "",
+      typeCategory: project.type?.typeCategory || "",
+      typeDateStack: project.type?.typeDateStack || "",
+    },
+    detailDescription: project.detailDescription || [""],
+    images: [], // new uploads only
+    featured: project.featured || false,
+    link: project.link || "",
+  });
+
+  // 🔥 preview ke liye existing images
+  setPreview({
+    mainImage: project.mainImage,
+    shortImage: project.shortImage,
+    images: project.images || [],
+  });
+
+}, [data]);
+
   return (
     <div className="w-full bg-linear-to-br from-gray-100 to-gray-200 py-7">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold mb-6">🚀 Add New Project</h1>
+        <h1 className="text-3xl font-bold mb-6">🔥 Update Project</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <h2 className="font-semibold mb-3 text-[15px]">Basic Info</h2>
@@ -535,7 +557,7 @@ const resetForm = () => {
             disabled={loading}
             className="w-full bg-black text-white py-3 rounded-xl hover:scale-105 transition disabled:opacity-50"
           >
-            {loading ? "Creating..." : "Create Project"}
+           {loading ? "Updating..." : "Update Project"}
           </button>
         </form>
       </div>
@@ -581,4 +603,4 @@ const resetForm = () => {
   );
 };
 
-export default Createproject;
+export default updateProject;

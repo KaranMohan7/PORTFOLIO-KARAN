@@ -1,7 +1,7 @@
 "use client"
 /* import ProjectScene from '@/components/backgrounds/ProjectScene' */
 import FlowingMenu from '@/components/FlowingMenu';
-import { projectData } from '@/utils/dummyData';
+/* import { projectData } from '@/utils/dummyData'; */
 import React, { useState } from 'react'
 import { BsFillMenuButtonWideFill } from "react-icons/bs";
 import { BiMenuAltRight } from "react-icons/bi";
@@ -9,6 +9,9 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from 'next/image';
 import Link from 'next/link';
+import { getAllProjects } from '@/utils/apiFunctions';
+import { useQuery } from '@tanstack/react-query';
+
 
 const projects = () => {
 
@@ -16,6 +19,13 @@ const projects = () => {
     const headerRef = useRef(null);
     const menuRef = useRef(null);
     const projectRef = useRef(null)
+
+      const { data, isLoading, isError } = useQuery({
+    queryKey: ["projects"],
+    queryFn: getAllProjects,
+  });
+
+    const projectData =  data?.data || []; 
     
 useEffect(() => {
   gsap.fromTo(
@@ -59,6 +69,14 @@ useEffect(() =>  {
 },[showMinimized])
 
 
+  if (isError) {
+  return (
+    <div className="text-red-500 text-center mt-40">
+      Failed to load projects ❌
+    </div>
+  );
+}
+
   return (
     <div className='w-full min-h-screen relative'>
       <div ref={headerRef} className='w-full lg:w-2/3 text-white mt-24 px-7 z-20'>  {/* this block has to be animated when we navigate  */}
@@ -78,58 +96,84 @@ useEffect(() =>  {
       </div>
 
 
-      {
-        showMinimized && <div ref={projectRef} className="w-full mt-12 grid grid-cols-1 md:grid-cols-2 gap-16 px-10 py-16">
-          {projectData.map((item, index) => (
-            <Link href={`/projects/${item._id}`} key={index} className="group">
-              <p className='text-white/40 py-2 capitalize'>{item?.name}</p>
-              <div className="relative overflow-hidden rounded-xl aspect-16/10 bg-neutral-900">
-                <Image
-                  src={item.mainImage}
-                  alt={item.title || "Project image"}
-                  fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  priority={index === 0}
-                />
-             {/*    <div className="absolute bottom-0 left-0 w-full p-6
-                  translate-y-8 opacity-0
-                  group-hover:translate-y-0 group-hover:opacity-100
-                  transition-all duration-500 ease-out delay-100">
-                  <p className="text-black text-2xl font-semibold capitalize">
-                    {item.name}
-                  </p>
-                </div> */}
-              </div>
-            </Link>
-          ))}
-        </div>
-      }
+{
+  showMinimized && (
+    isLoading ? (
+      <GridSkeleton />
+    ) : (
+      <div ref={projectRef} className="w-full mt-10 grid grid-cols-1 md:grid-cols-2 gap-16 px-10 py-16">
+        {projectData.map((item, index) => (
+          <Link href={`/projects/${item._id}`} key={item._id} className="group">
+            <p className='text-white/40 py-2 capitalize'>{item?.name}</p>
+
+            <div className="relative overflow-hidden rounded-xl aspect-16/10 bg-neutral-900">
+              <Image
+                src={item.mainImage}
+                alt={item.name}
+                fill
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                priority={index === 0}
+              />
+            </div>
+          </Link>
+        ))}
+      </div>
+    )
+  )
+}
 
       {
-        !showMinimized &&
-        <div ref={projectRef} className='mt-20'>
+  !showMinimized && (
+    isLoading ? (
+      <ListSkeleton />
+    ) : (
+      <div ref={projectRef} className='mt-20'>
+        {projectData.map((item) => {
+          const RequiredItems = [
+            { link: "", image: item.shortImage, text: item.shortName }
+          ];
 
-          {projectData?.map((item, index) => {
-            const RequiredItems = [
-              { link: "", image: item.shortImage, text: item.shortName }
-            ];
-
-            return (
-              <div key={index} className="border-white border-b-2 ">
-              <Link href={`/projects/${item._id}`}  >
+          return (
+            <div key={item._id} className="border-white border-b-2">
+              <Link href={`/projects/${item._id}`}>
                 <FlowingMenu items={RequiredItems} />
               </Link>
-              </div>
-            );
-          })}
-
-
-        </div>
-      }
-
+            </div>
+          );
+        })}
+      </div>
+    )
+  )
+}
       {/* <ProjectScene /> */}
     </div>
   )
 }
+
+const GridSkeleton = () => {
+  return (
+    <div className="w-full mt-12 grid grid-cols-1 md:grid-cols-2 gap-16 px-10 py-16 animate-pulse">
+      {[...Array(4)].map((_, i) => (
+        <div key={i}>
+          <div className="h-4 w-32 bg-zinc-700 rounded mb-4"></div>
+          <div className="w-full aspect-16/10 bg-zinc-800 rounded-xl"></div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const ListSkeleton = () => {
+  return (
+    <div className="mt-20 animate-pulse">
+      {[...Array(5)].map((_, i) => (
+        <div key={i} className="border-b border-zinc-700 py-6 px-10 flex items-center gap-4">
+          <div className="w-16 h-16 bg-zinc-700 rounded-md"></div>
+          <div className="h-4 w-40 bg-zinc-700 rounded"></div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default projects

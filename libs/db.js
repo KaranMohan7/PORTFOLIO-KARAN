@@ -6,7 +6,7 @@ export const connectDB = async () => {
   try {
     if (isConnected) return;
 
-    const db = await mongoose.connect(process.env.MONGO_URI);
+    const db = await mongoose.connect(process.env.MONGODB_URI);
 
     isConnected = db.connections[0].readyState;
 

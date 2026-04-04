@@ -6,6 +6,7 @@ import AppWrapper from "@/components/AppWrapper";
 import AnimationAndLogicProvider from "./context/AnimationAndLogicProvider";
 import LenisProvider from "./context/LenisProvider";
 import Footer from "@/components/HomeParts/Footer";
+import ReactQueryProvider from "@/components/ReactQueryProvider";
 
 
 const manropeFont = Manrope({
@@ -22,16 +23,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" >
       <body className={`${manropeFont.className} antialiased bg-[#18181B]`}>
+        <ReactQueryProvider>
         <AnimationAndLogicProvider>
           <LenisProvider>
           <CursorProvider>
 
             {/* Page content with loader control */}
             <AppWrapper>{children}</AppWrapper>
-          <Footer />
+        <Footer />
           </CursorProvider>
           </LenisProvider>
         </AnimationAndLogicProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

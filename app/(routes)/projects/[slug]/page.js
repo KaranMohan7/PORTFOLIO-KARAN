@@ -8,12 +8,14 @@ import { IoMdArrowRoundDown } from "react-icons/io";
 import { useRef } from "react";
 import SinglepageButton from '@/components/SinglepageButton';
 import gsap from 'gsap';
+import { useQuery } from '@tanstack/react-query';
+import { getSingleProject } from '@/utils/apiFunctions';
+import Link from 'next/link';
 
 
 const page = () => {
 
   const { slug } = useParams()
-  const [singlePageData, setSinglePageData] = useState({})
   const liveSectionRef = useRef(null)
   const [isLightMode, setIsLightMode] = useState(false)
 
@@ -21,6 +23,11 @@ const page = () => {
   const titleRef = useRef(null);
   const barRef = useRef(null);
 
+  const { data, isLoading, isError } = useQuery({
+  queryKey: ["project", slug],
+  queryFn: () => getSingleProject(slug),
+  enabled: !!slug, // slug aaye tab hi call hoga
+});
 
   useEffect(() => {
     if (!liveSectionRef.current) return
@@ -39,12 +46,7 @@ const page = () => {
     return () => observer.disconnect()
   }, [])
 
-
-  useEffect(() => {
-    if (!slug) return
-    const filteredData = projectData.find(item => slug === item._id)
-    setSinglePageData(filteredData)
-  }, [slug])
+ const singlePageData = data?.data || data || {};
 
   useLayoutEffect(() => {
     if (!singlePageData?.name) return;
@@ -98,6 +100,13 @@ const page = () => {
 
   }, [singlePageData]);
 
+  if (isError) {
+  return (
+    <div className="text-red-500 text-center mt-40">
+      Failed to load project ❌
+    </div>
+  );
+}
 
   return (
     <div className={`w-full min-h-screen overflow-hidden transition-colors duration-800 ease-in-out mt-5
@@ -165,23 +174,30 @@ const page = () => {
           <p className='leading-7 sm:leading-8 text-sm sm:text-base'>
             {singlePageData?.description}
           </p>
-          <SinglepageButton text={"Live Website"} />
+{
+  singlePageData.link && 
+            <Link href={singlePageData.link} target='__blank'>
+          <div>
+            <SinglepageButton  text={"Live Website"} />
+          </div>
+          </Link>
+}
         </div>
 
         {/* Right */}
         <div className='space-y-2 text-sm sm:text-base'>
           <p className='font-semibold'>{singlePageData?.type?.typeName}</p>
           <p>{singlePageData?.type?.typeCategory}</p>
-          <p>{singlePageData?.type?.dateStack}</p>
+          <p>{singlePageData?.type?.typeDateStack}</p>
         </div>
 
       </div>
 
       {/* Secondary Image */}
       <div className='w-full px-4 sm:px-8 lg:px-12 flex justify-center py-6'>
-        {singlePageData?.Images?.[0] && (
+        {singlePageData?.images?.[0] && (
           <Image
-            src={singlePageData.Images[0]}
+            src={singlePageData.images[0]}
             width={2000}
             height={2000}
             alt={singlePageData.name || "project preview"}
