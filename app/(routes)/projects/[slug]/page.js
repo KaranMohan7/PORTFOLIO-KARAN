@@ -19,6 +19,7 @@ const page = () => {
   const liveSectionRef = useRef(null)
   const [projectTitle, setProjectTitle] = useState("Loading Project...");
   const [isLightMode, setIsLightMode] = useState(false)
+  const [isMobile, setIsMobile] = useState(false);
 
   const introRef = useRef(null);
   const titleRef = useRef(null);
@@ -30,22 +31,21 @@ const page = () => {
   enabled: !!slug, // slug aaye tab hi call hoga
 });
 
-  useEffect(() => {
-    if (!liveSectionRef.current) return
+useEffect(() => {
+  if (!liveSectionRef.current || isMobile) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsLightMode(entry.isIntersecting)
-      },
-      {
-        threshold: 0.4, // 40% visible → trigger
-      }
-    )
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      setIsLightMode(entry.isIntersecting);
+    },
+    { threshold: 0.4 }
+  );
 
-    observer.observe(liveSectionRef.current)
+  observer.observe(liveSectionRef.current);
 
-    return () => observer.disconnect()
-  }, [])
+  return () => observer.disconnect();
+}, [isMobile]);
+
 
  const singlePageData = data?.data || data || {};
 
@@ -107,6 +107,13 @@ const page = () => {
   }
 }, [singlePageData]);
 
+useEffect(() => {
+  const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+  checkMobile();
+  window.addEventListener("resize", checkMobile);
+  return () => window.removeEventListener("resize", checkMobile);
+}, []);
+
   if (isError) {
   return (
     <div className="text-red-500 text-center mt-40">
@@ -114,7 +121,6 @@ const page = () => {
     </div>
   );
 }
-
 
   return (
     <div className={`w-full min-h-screen overflow-hidden transition-colors duration-800 ease-in-out mt-5

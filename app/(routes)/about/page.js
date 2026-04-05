@@ -167,7 +167,7 @@ const AboutImage = data?.data?.aboutImage;
           </p>
           <Link href={'/contact'}><Button text={"Say Hello !"} /></Link>
         </div>
-        <div className="ml-auto">
+        <div className="ml-auto mt-5 md:mt-0">
           <Imagecontainer Mepicture={AboutImage} width={580} height={100} />
         </div>
       </div>

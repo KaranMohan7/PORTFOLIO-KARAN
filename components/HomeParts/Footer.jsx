@@ -33,7 +33,7 @@ const Footer = () => {
   return (
     <section
       id="contact"
-      className="flex flex-col justify-between min-h-screen bg-black relative z-9999"
+      className="flex flex-col justify-between min-h-screen bg-black relative z-999"
     >
       <div>
         <HeaderServices

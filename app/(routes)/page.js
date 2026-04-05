@@ -21,7 +21,7 @@ const page = () => {
         <div
           className="
     flex flex-col justify-center 
-    w-full min-h-screen `
+    w-full h-[94vh] `
     px-4 sm:px-8 md:px-16 lg:px-24 xl:px-28
   "
         >
