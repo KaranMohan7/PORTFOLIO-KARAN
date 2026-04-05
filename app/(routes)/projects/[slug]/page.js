@@ -18,8 +18,8 @@ const page = () => {
   const { slug } = useParams()
   const liveSectionRef = useRef(null)
   const [projectTitle, setProjectTitle] = useState("Loading Project...");
-  const [isLightMode, setIsLightMode] = useState(false)
-  const [isMobile, setIsMobile] = useState(false);
+/*   const [isLightMode, setIsLightMode] = useState(false)
+  const [isMobile, setIsMobile] = useState(false); */
 
   const introRef = useRef(null);
   const titleRef = useRef(null);
@@ -31,7 +31,7 @@ const page = () => {
   enabled: !!slug, // slug aaye tab hi call hoga
 });
 
-useEffect(() => {
+/* useEffect(() => {
   if (!liveSectionRef.current || isMobile) return;
 
   const observer = new IntersectionObserver(
@@ -45,7 +45,7 @@ useEffect(() => {
 
   return () => observer.disconnect();
 }, [isMobile]);
-
+ */
 
  const singlePageData = data?.data || data || {};
 
@@ -107,12 +107,12 @@ useEffect(() => {
   }
 }, [singlePageData]);
 
-useEffect(() => {
+/* useEffect(() => {
   const checkMobile = () => setIsMobile(window.innerWidth < 1024);
   checkMobile();
   window.addEventListener("resize", checkMobile);
   return () => window.removeEventListener("resize", checkMobile);
-}, []);
+}, []); */
 
   if (isError) {
   return (
@@ -123,8 +123,7 @@ useEffect(() => {
 }
 
   return (
-    <div className={`w-full min-h-screen overflow-hidden transition-colors duration-800 ease-in-out mt-5
-    ${isLightMode ? "bg-white text-black" : "bg-[#18181B] text-white"}
+    <div className={`w-full min-h-screen overflow-hidden transition-colors duration-800 ease-in-out mt-5 text-white bg-[#18181B]
   `}>
 
 {/* Loader */}
@@ -178,7 +177,7 @@ useEffect(() => {
         )}
       </div>
 
-      <hr className={`my-6 ${isLightMode ? "border-black" : "border-white"} border-[1.5px]`} />
+      <hr className={`my-6 border-white border-[1.5px]`} />
 
       {/* Description Section */}
       <div className='px-4 sm:px-8 lg:px-16 w-full py-6 flex flex-col lg:flex-row gap-10 justify-between'>
