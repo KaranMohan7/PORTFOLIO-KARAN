@@ -7,6 +7,7 @@ import AnimationAndLogicProvider from "./context/AnimationAndLogicProvider";
 import LenisProvider from "./context/LenisProvider";
 import Footer from "@/components/HomeParts/Footer";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
+import { Toaster } from "react-hot-toast";
 
 
 const manropeFont = Manrope({
@@ -27,7 +28,34 @@ export default function RootLayout({ children }) {
         <AnimationAndLogicProvider>
           <LenisProvider>
           <CursorProvider>
-
+<Toaster
+          position="top-right"
+          reverseOrder={false}
+          gutter={10}
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "#0f0f0f",
+              color: "#fff",
+              borderRadius: "14px",
+              padding: "14px 18px",
+              fontSize: "14px",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+            },
+            success: {
+              iconTheme: {
+                primary: "#22c55e",
+                secondary: "#0f0f0f",
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: "#ef4444",
+                secondary: "#0f0f0f",
+              },
+            },
+          }}
+        />
             {/* Page content with loader control */}
             <AppWrapper>{children}</AppWrapper>
         <Footer />

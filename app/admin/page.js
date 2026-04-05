@@ -6,6 +6,7 @@ import { FaProjectDiagram, FaCheckCircle } from "react-icons/fa";
 import { MdAdd, MdEdit } from "react-icons/md";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { getAllProjects } from "@/utils/apiFunctions";
 
 const Dashboard = () => {
 
@@ -54,6 +55,12 @@ const Dashboard = () => {
     },
   });
 
+    const { data: projectLength } = useQuery({
+      queryKey: ["projects"],
+      queryFn: getAllProjects,
+    });
+  
+
   // upload handler
   const handleUpload = (e, field) => {
     const file = e.target.files[0];
@@ -90,16 +97,14 @@ const Dashboard = () => {
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
 
-        <div className="bg-black text-white px-4 py-2 rounded-xl shadow">
+        <Link href={'/'} className="bg-black text-white px-4 py-2 rounded-xl shadow">
           Karan Mohan Talwar 🔥
-        </div>
+        </Link>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <StatCard title="Total Projects" value={12} icon={<FaProjectDiagram />} color="bg-blue-100 text-blue-600" />
-        <StatCard title="Completed" value={8} icon={<FaCheckCircle />} color="bg-green-100 text-green-600" />
-        <StatCard title="In Progress" value={4} icon={<FaProjectDiagram />} color="bg-yellow-100 text-yellow-600" />
+        <StatCard title="Total Projects" value={projectLength?.data?.length} icon={<FaProjectDiagram />} color="bg-blue-100 text-blue-600" />
       </div>
 
       {/* Quick Actions */}
@@ -155,9 +160,7 @@ const Dashboard = () => {
 export default Dashboard;
 
 
-
-
-/* 🔥 Components */
+/*  Components */
 
 const StatCard = ({ title, value, icon, color }) => {
   return (
@@ -188,7 +191,7 @@ const ImageCard = ({ title, image, onChange }) => {
     <div className="space-y-2">
       <p className="text-sm font-medium">{title}</p>
 
-      <label className="relative block h-48 border-2 border-dashed rounded-xl overflow-hidden cursor-pointer group">
+      <label className="relative block min-h-48 border-2 border-dashed rounded-xl overflow-hidden cursor-pointer group">
 
         {image ? (
           <>
