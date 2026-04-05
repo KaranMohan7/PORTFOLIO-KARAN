@@ -80,7 +80,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-                  <Marquee items={items} className="text-white bg-transparent text-4xl" />
+                 {/*  <Marquee items={items} className="text-white bg-transparent text-4xl" /> */}
     </section>
   );
 };

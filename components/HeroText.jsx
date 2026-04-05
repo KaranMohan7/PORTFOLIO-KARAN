@@ -44,7 +44,7 @@ const HeroText = ({ startAnimation }) => {
   }, [startAnimation]);
 
   return (
-    <div className="text-white mt-12 md:mt-24 px-3 md:px-0">
+    <div className="text-white md:mt-24 px-3 md:px-0">
       {/* MAIN TITLE */}
       <p
         ref={textOneRef}

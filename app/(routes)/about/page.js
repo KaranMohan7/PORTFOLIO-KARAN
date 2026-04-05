@@ -11,16 +11,25 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import StylishBarSecond from "@/components/ui/StylishBarSecond.jsx";
-import { PUBLIC_ABOUT_IMAGE_URL } from "../../../utils/dummyData.js";
 import Link from "next/link.js";
+import { useQuery } from "@tanstack/react-query";
 
 gsap.registerPlugin(ScrollTrigger);
 export default function About() {
-  const AboutImage = PUBLIC_ABOUT_IMAGE_URL;
   const expDescRef = useRef(null);
   const whatIDoRef = useRef(null);
   const myJourneyRef = useRef(null)
   const aboutHeroRef = useRef(null);
+
+    const { data } = useQuery({
+  queryKey: ["homepage"],
+  queryFn: async () => {
+    const res = await fetch("/api/home");
+    return res.json();
+  },
+});
+
+const AboutImage = data?.data?.aboutImage;
 
   useEffect(() => {
     gsap.fromTo(

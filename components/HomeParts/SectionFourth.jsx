@@ -60,7 +60,7 @@ const SectionFourth = () => {
     "Building meaningful interactions and micro animations that guide users and enhance feedback.";
 
   return (
-    <div className="w-full min-h-screen py-24 md:py-32 text-white px-3 sm:px-4 mt-5">
+    <div className="w-full min-h-screen py-24 md:py-32 text-white px-3 sm:px-4 mt-10">
       {/* 1 */}
       <div className="w-full border-t border-white/30 py-4 grid grid-cols-12 gap-y-4">
         <div className="col-span-12 md:col-span-9 flex gap-4 md:gap-20 items-center">

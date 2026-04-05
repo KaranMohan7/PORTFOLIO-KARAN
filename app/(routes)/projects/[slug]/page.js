@@ -17,6 +17,7 @@ const page = () => {
 
   const { slug } = useParams()
   const liveSectionRef = useRef(null)
+  const [projectTitle, setProjectTitle] = useState("Loading Project...");
   const [isLightMode, setIsLightMode] = useState(false)
 
   const introRef = useRef(null);
@@ -49,7 +50,7 @@ const page = () => {
  const singlePageData = data?.data || data || {};
 
   useLayoutEffect(() => {
-    if (!singlePageData?.name) return;
+      if (!titleRef.current) return;
 
     const ctx = gsap.context(() => {
 
@@ -98,7 +99,13 @@ const page = () => {
 
     return () => ctx.revert();
 
-  }, [singlePageData]);
+  }, []);
+
+  useEffect(() => {
+  if (singlePageData?.name) {
+    setProjectTitle(singlePageData.name);
+  }
+}, [singlePageData]);
 
   if (isError) {
   return (
@@ -107,6 +114,7 @@ const page = () => {
     </div>
   );
 }
+
 
   return (
     <div className={`w-full min-h-screen overflow-hidden transition-colors duration-800 ease-in-out mt-5
@@ -125,7 +133,7 @@ const page = () => {
       ref={titleRef}
       className="text-white text-sm md:text-2xl font-medium uppercase tracking-[0.2em]"
     >
-      {singlePageData?.name}
+     {projectTitle}
     </h1>
   </div>
 

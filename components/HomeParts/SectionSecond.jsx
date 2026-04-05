@@ -7,7 +7,7 @@ import { SplitText } from "gsap/SplitText";
 import Underlinedbutton from "../Underlinedbutton";
 import { appcontext } from "@/app/context/CursorProvider";
 import Link from "next/link";
-import { PUBLIC_IMAGE_URL } from "@/utils/dummyData";
+import { useQuery } from "@tanstack/react-query";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,8 +18,17 @@ const SectionSecond = () => {
   const parallexTextRef = useRef(null);
   const aboutRef = useRef(null);
   const { cursor } = useContext(appcontext);
-  const Mepicture = PUBLIC_IMAGE_URL;
 
+
+  const { data } = useQuery({
+  queryKey: ["homepage"],
+  queryFn: async () => {
+    const res = await fetch("/api/home");
+    return res.json();
+  },
+});
+
+const Mepicture = data?.data?.homeImage;
   useEffect(() => {
     if (!sectionRef.current || !parallexTextRef.current) return;
 
@@ -196,11 +205,15 @@ const SectionSecond = () => {
 
       {/* IMAGE */}
       <div className="mt-20 md:mt-32 lg:mt-48 relative">
-        <Imagecontainer
-          Mepicture={Mepicture}
-          width={650}
-          height={550}
-        />
+{!Mepicture ? (
+  <ImageSkeleton />
+) : (
+  <Imagecontainer
+    Mepicture={Mepicture}
+    width={650}
+    height={550}
+  />
+)}
       </div>
 
     </div>
@@ -208,3 +221,10 @@ const SectionSecond = () => {
 };
 
 export default SectionSecond;
+
+const ImageSkeleton = () => {
+  return (
+    <div className="w-full max-w-[650px] h-[350px] md:h-[450px] lg:h-[550px] 
+    bg-gray-300/30 rounded-xl animate-pulse" />
+  );
+};
