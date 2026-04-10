@@ -2,9 +2,11 @@
 import { getSingleProject, updateProjects } from "@/utils/apiFunctions";
 import { useParams, useRouter } from "next/navigation";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query"
 import toast from "react-hot-toast";
+import gsap from "gsap";
+
 
 
 const updateProject = () => {
@@ -37,10 +39,12 @@ const updateProject = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
 
   const { id } = useParams();
 
-const { data } = useQuery({
+const { data, isLoading } = useQuery({
   queryKey: ["project", id],
   queryFn: () => getSingleProject(id),
   enabled: !!id,
@@ -120,6 +124,7 @@ const { data } = useQuery({
     const updated = form[field].filter((_, i) => i !== index);
     setForm((prev) => ({ ...prev, [field]: updated }));
   };
+  
 
 const validate = () => {
   let newErrors = {};
@@ -216,6 +221,13 @@ const validate = () => {
   }
 };
 
+  // smooth skeleton delay
+  useEffect(() => {
+    if (!isLoading) {
+      setTimeout(() => setShowSkeleton(false), 300);
+    }
+  }, [isLoading]);
+
 useEffect(() => {
   if (!data?.data) return;
 
@@ -247,6 +259,9 @@ useEffect(() => {
   });
 
 }, [data]);
+
+  if (showSkeleton) return <FormSkeleton />;
+
 
   return (
     <div className="w-full bg-linear-to-br from-gray-100 to-gray-200 py-7">
@@ -604,3 +619,54 @@ useEffect(() => {
 };
 
 export default updateProject;
+
+
+/* Skeleton */
+
+const FormSkeleton = () => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.to(".shimmer", {
+        x: "100%",
+        duration: 1.2,
+        repeat: -1,
+        ease: "linear",
+      });
+
+      gsap.from(".sk", {
+        opacity: 0,
+        y: 20,
+        stagger: 0.08,
+        duration: 0.5,
+      });
+    }, ref);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div ref={ref} className="max-w-6xl mx-auto p-8 space-y-6">
+
+      <div className="h-8 w-60 bg-gray-300 rounded sk relative overflow-hidden">
+        <Shimmer />
+      </div>
+
+      {[1,2,3,4,5].map((_, i) => (
+        <div key={i} className="h-12 bg-gray-200 rounded-xl sk relative overflow-hidden">
+          <Shimmer />
+        </div>
+      ))}
+
+      <div className="h-40 bg-gray-200 rounded-xl sk relative overflow-hidden">
+        <Shimmer />
+      </div>
+
+    </div>
+  );
+};
+
+const Shimmer = () => (
+  <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent" />
+);

@@ -176,7 +176,7 @@ const AboutImage = data?.data?.aboutImage;
         <p className="text-sm md:text-lg py-5 tracking-wide">WHAT I DO</p>
         <p
           ref={whatIDoRef}
-          className="text-2xl md:text-5xl py-3 w-full font-semibold leading-12 lg:leading-16"
+          className="text-2xl md:text-5xl py-3 w-full font-semibold leading-10 lg:leading-16"
         >
           I build reliable and user focused web applications with a frontend
           focused approach, emphasizing clean, responsive, and intuitive
@@ -187,7 +187,7 @@ const AboutImage = data?.data?.aboutImage;
       </div>
 
       <div className="md:mt-12">
-        <p className="text-sm md:text-lg py-5 tracking-wide">TECH STACK</p>
+        <p className="text-sm md:text-lg py-3 tracking-wide">TECH STACK</p>
         {techStack.map((item, index) => (
           <div key={index}>
             <StylishBar item={item} />
@@ -196,7 +196,7 @@ const AboutImage = data?.data?.aboutImage;
       </div>
       <div className="mt-16">
         <p className="text-sm md:text-lg py-5 tracking-wide">EXPERIENCE</p>
-        <p ref={expDescRef} className="text-3xl md:text-5xl leading-16">
+        <p ref={expDescRef} className="text-2xl md:text-5xl leading-12 md:leading-16">
           I’ve been gaining hands on experience through internship and freelance
           work, contributing to real world projects that strengthened my
           understanding of modern web development and user focused design.
@@ -221,7 +221,7 @@ const AboutImage = data?.data?.aboutImage;
           <p className="text-lg md:text-2xl py-5 tracking-wide">{"</ >"}</p>
           <p
             ref={myJourneyRef}
-            className="text-2xl md:text-5xl py-2 w-full font-semibold leading-16"
+            className="text-2xl md:text-5xl py-2 w-full leading-12 md:leading-16"
           >
             My journey is defined less by milestones and more by momentum. I
             learn by building, breaking, and refining. Each project represents a

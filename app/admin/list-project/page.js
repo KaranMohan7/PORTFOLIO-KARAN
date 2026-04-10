@@ -33,7 +33,7 @@ const Page = () => {
   const projects = data?.data || data || [];
 
   return (
-    <div className="w-full bg-linear-to-br from-gray-100 to-gray-200 min-h-screen py-10">
+    <div className="w-full bg-linear-to-br from-gray-100 to-gray-200 h-screen py-10">
 
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-8">
 
@@ -77,13 +77,10 @@ const Page = () => {
                 </div>
 
                 <div className="col-span-2">
-                  <Image
-                    src={project.shortImage}
-                    alt={project.name}
-                    width={80}
-                    height={50}
-                    className="rounded-md object-cover"
-                  />
+          <SmoothImage
+  src={project.shortImage}
+  alt={project.name}
+/>
                 </div>
 
                 <div className="col-span-3 font-medium text-[14px]">
@@ -168,38 +165,84 @@ const Page = () => {
 };
 
 
-const TableSkeleton = () => {
-  return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden animate-pulse">
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
+const TableSkeleton = () => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // shimmer animation
+      gsap.to(".shimmer", {
+        x: "100%",
+        duration: 1.2,
+        repeat: -1,
+        ease: "linear",
+      });
+
+      // stagger fade + slight up animation
+      gsap.from(".skeleton-row", {
+        opacity: 0,
+        y: 10,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power2.out",
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="border border-gray-200 rounded-xl overflow-hidden bg-white"
+    >
       {/* Header */}
-      <div className="grid grid-cols-12 bg-gray-100 px-4 py-3">
+      <div className="grid grid-cols-12 bg-gray-100 px-4 py-3 relative overflow-hidden">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="h-4 bg-gray-300 rounded col-span-2"></div>
+          <div key={i} className="col-span-2 relative overflow-hidden">
+            <div className="h-4 bg-gray-300 rounded"></div>
+            <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent"></div>
+          </div>
         ))}
       </div>
 
       {/* Rows */}
-      {Array.from({ length: 5 }).map((_, i) => (
+      {Array.from({ length: 6 }).map((_, i) => (
         <div
           key={i}
-          className="grid grid-cols-12 items-center px-4 py-4 border-t"
+          className="skeleton-row grid grid-cols-12 items-center px-4 py-4 border-t"
         >
-          <div className="col-span-1 h-3 bg-gray-200 rounded w-4"></div>
-
-          <div className="col-span-2">
-            <div className="w-20 h-[50px] bg-gray-200 rounded-md"></div>
+          <div className="col-span-1 h-3 bg-gray-200 rounded w-4 relative overflow-hidden">
+            <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent"></div>
           </div>
 
-          <div className="col-span-3 h-4 bg-gray-200 rounded w-3/4"></div>
+          <div className="col-span-2 relative overflow-hidden">
+            <div className="w-20 h-[50px] bg-gray-200 rounded-md"></div>
+            <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent"></div>
+          </div>
 
-          <div className="col-span-2 h-3 bg-gray-200 rounded w-2/3"></div>
+          <div className="col-span-3 h-4 bg-gray-200 rounded w-3/4 relative overflow-hidden">
+            <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent"></div>
+          </div>
 
-          <div className="col-span-2 h-6 bg-gray-200 rounded-full w-16"></div>
+          <div className="col-span-2 h-3 bg-gray-200 rounded w-2/3 relative overflow-hidden">
+            <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent"></div>
+          </div>
+
+          <div className="col-span-2 h-6 bg-gray-200 rounded-full w-16 relative overflow-hidden">
+            <div className="shimmer absolute top-0 -left-fullw-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent"></div>
+          </div>
 
           <div className="col-span-2 flex justify-end gap-3">
-            <div className="h-3 w-10 bg-gray-200 rounded"></div>
-            <div className="h-3 w-12 bg-gray-200 rounded"></div>
+            <div className="h-3 w-10 bg-gray-200 rounded relative overflow-hidden">
+              <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent"></div>
+            </div>
+            <div className="h-3 w-12 bg-gray-200 rounded relative overflow-hidden">
+              <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent"></div>
+            </div>
           </div>
         </div>
       ))}
@@ -207,4 +250,45 @@ const TableSkeleton = () => {
   );
 };
 
+const SmoothImage = ({ src, alt }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="relative w-20 h-[50px] overflow-hidden rounded-md">
+
+      {/* Skeleton */}
+      {!loaded && (
+        <div className="absolute inset-0 bg-gray-200 overflow-hidden">
+          <div className="shimmer absolute top-0 -left-full w-full h-full bg-linear-to-r from-transparent via-white/60 to-transparent" />
+        </div>
+      )}
+
+      {/* Image */}
+      <Image
+        src={src}
+        alt={alt}
+        width={80}
+        height={50}
+        onLoad={() => setLoaded(true)}
+        className={`object-cover transition-all duration-700 rounded-md ${
+          loaded
+            ? "opacity-100 blur-0 scale-100"
+            : "opacity-0 blur-xl scale-110"
+        }`}
+      />
+
+      {/* shimmer animation */}
+      <style jsx>{`
+        .shimmer {
+          animation: shimmer 1.4s infinite linear;
+        }
+        @keyframes shimmer {
+          100% {
+            transform: translateX(100%);
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
 export default Page;

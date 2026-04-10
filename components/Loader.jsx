@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
@@ -20,27 +22,30 @@ export default function Loader({ onFinish }) {
     const tl = gsap.timeline({
       onComplete: finishLoader,
     });
-    gsap.set(textRef.current, { opacity: 0 });
 
-    tl.call(() => {
-      setIndex(0);
-      gsap.set(textRef.current, { opacity: 0 }); // ensures no flicker
-    })
-      .to(textRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: "power2.out",
-      })
-      .to({}, { duration: 0.4 });
+    // initial set (once only)
+    gsap.set(textRef.current, { opacity: 0, y: 0 });
 
-    greetings.slice(1).forEach((greet, i) => {
+    // first greeting
+    tl.to(textRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      ease: "power2.out",
+    }).to({}, { duration: 0.4 });
+
+    // rest greetings (optimized loop)
+    greetings.slice(1).forEach((_, i) => {
       tl.call(() => {
-        gsap.set(textRef.current, { opacity: 1, y: 0 });
+      
         setIndex(i + 1);
       });
       tl.to({}, { duration: 0.15 });
     });
+
+    return () => {
+      tl.kill(); // cleanup (important for mobile perf)
+    };
   }, []);
 
   const finishLoader = () => {
@@ -49,18 +54,19 @@ export default function Loader({ onFinish }) {
       duration: 1.1,
       ease: "expo.out",
       delay: 0.5,
-      onComplete: onFinish
+      onComplete: onFinish,
+      willChange: "transform", // 🔥 perf boost
     });
   };
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-999 bg-[#111111] flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-9999 bg-[#111111] flex items-center justify-center overflow-hidden will-change-transform"
     >
       <p
         ref={textRef}
-        className="text-5xl md:text-6xl font-semibold text-white"
+        className="text-5xl md:text-6xl font-semibold text-white opacity-0"
       >
         {greetings[index]}
       </p>
