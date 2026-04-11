@@ -42,7 +42,7 @@ const Page = () => {
           <h1 className="text-3xl font-bold">📁 Project List</h1>
 
           <Link
-            href="/admin/create-project"
+            href="/admin-karanK771/create-project"
             className="bg-black text-white px-4 py-2 rounded-lg text-sm hover:scale-105 transition"
           >
             + Add Project
@@ -105,7 +105,7 @@ const Page = () => {
 
                 <div className="col-span-2 flex justify-end gap-4">
                   <Link
-                    href={`/admin/update-project/${project._id}`}
+                    href={`/admin-karanK771/update-project/${project._id}`}
                     className="text-blue-600 hover:underline text-sm"
                   >
                     Edit

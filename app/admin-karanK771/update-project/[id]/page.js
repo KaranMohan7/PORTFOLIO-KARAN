@@ -208,7 +208,7 @@ const validate = () => {
 
     if (data.success) {
       toast.success( data?.message ||"Project Updated ✅");
-      router.push("/admin/list-project")
+      router.push("/admin-karanK771/list-project")
        // redirect
     } else {
       toast.error(data?.message);

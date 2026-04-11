@@ -107,11 +107,11 @@ const Dashboard = () => {
         <h3 className="text-lg font-semibold mb-4">⚡ Quick Actions</h3>
 
         <div className="flex flex-wrap gap-4">
-          <Link href="/admin/create-project">
+          <Link href="/admin-karanK771/create-project">
             <ActionBtn icon={<MdAdd />} text="Add Project" />
           </Link>
 
-          <Link href="/admin/list-project">
+          <Link href="/admin-karanK771/list-project">
             <ActionBtn icon={<MdEdit />} text="Edit Projects" />
           </Link>
         </div>

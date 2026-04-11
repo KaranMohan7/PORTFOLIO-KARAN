@@ -86,7 +86,7 @@ const HeroText = ({ startAnimation }) => {
           <p
             ref={rightPara2Ref}
             style={{ opacity: 0 }}
-            className="mt-4 md:mt-6"
+            className="mt-5 md:mt-6"
           >
             From concept to execution, I turn ideas into immersive digital
             products, obsessing over the small details that make a big

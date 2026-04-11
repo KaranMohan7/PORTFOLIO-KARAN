@@ -13,15 +13,15 @@ const AdminLayout = ({ children }) => {
         <h1 className="text-2xl font-bold mb-10">Karan.dev</h1>
 
         <nav className="space-y-6">
-          <Link href="/admin" className="flex items-center gap-3 hover:text-gray-300">
+          <Link href="/admin-karanK771" className="flex items-center gap-3 hover:text-gray-300">
             <Home size={20} /> Dashboard
           </Link>
 
-          <Link href="/admin/list-project" className="flex items-center gap-3 hover:text-gray-300">
+          <Link href="/admin-karanK771/list-project" className="flex items-center gap-3 hover:text-gray-300">
             <Folder size={20} /> Projects
           </Link>
 
-          <Link href="/admin/create-project" className="flex items-center gap-3 hover:text-gray-300">
+          <Link href="/admin-karanK771/create-project" className="flex items-center gap-3 hover:text-gray-300">
             <PlusCircle size={20} /> Add Project
           </Link>
         </nav>
