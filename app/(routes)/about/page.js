@@ -128,11 +128,12 @@ const AboutImage = data?.data?.aboutImage;
         "-=0.8"
       )
       .from(
-        aboutHeroRef.current.querySelector("button"),
+        aboutHeroRef.current.querySelectorAll("button"),
         {
           y: 40,
           opacity: 0,
           scale: 0.9,
+          stagger: 0.2,
         },
         "-=0.6"
       )
@@ -165,7 +166,30 @@ const AboutImage = data?.data?.aboutImage;
             interactions. I believe good interfaces are felt more than they’re
             noticed.
           </p>
-          <Link href={'/contact'}><Button text={"Say Hello !"} /></Link>
+          
+<div className="pt-6 flex flex-col sm:flex-row gap-4 sm:items-center">
+
+  {/* Primary CTA */}
+  <Link href="/contact">
+    <Button
+      text="Say Hello 👋"
+      className="bg-white text-black hover:bg-neutral-200 transition-all duration-300 px-6 py-3 rounded-full font-medium"
+    />
+  </Link>
+
+  {/* Secondary CTA */}
+  <Link
+    href="https://drive.google.com/file/d/1nAgebWAYJVSsl0tmiwHe5Rl-O3xisTnb/view?usp=sharing"
+    target="_blank"
+  >
+    <Button
+      text="Resume"
+      className="border border-white text-white hover:bg-white hover:text-black transition-all duration-300 px-6 py-3 rounded-full font-medium"
+    />
+  </Link>
+
+</div>
+          
         </div>
         <div className="ml-auto mt-5 md:mt-0">
           <Imagecontainer Mepicture={AboutImage} width={580} height={100} />

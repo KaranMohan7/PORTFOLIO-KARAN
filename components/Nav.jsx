@@ -6,6 +6,7 @@ import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
 import { appcontext } from "@/app/context/CursorProvider";
 import Link from "next/link";
+import { PiReadCvLogo } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 
 const Nav = () => {
@@ -235,6 +236,18 @@ const Nav = () => {
               ref={socialRef}
               className="flex flex-col space-y-5 text-sm md:text-lg"
             >
+                                          <Link
+                href={
+                  "https://drive.google.com/file/d/1nAgebWAYJVSsl0tmiwHe5Rl-O3xisTnb/view?usp=sharing"
+                }
+                 target="__blank"
+                className="flex items-center gap-3"
+              >
+                <div className="bg-zinc-800 rounded-full w-8 h-8 flex justify-center items-center transition-all duration-500 hover:bg-white hover:text-black">
+                  <PiReadCvLogo />
+                </div>
+                <p>Resume</p>
+              </Link>
               <Link
                 href={"https://github.com/KaranMohan7"}
                 target="__blank"

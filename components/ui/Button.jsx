@@ -47,7 +47,7 @@ const Button = ({ text, px="20" }) => {
       ref={btnRef}
       onMouseEnter={() => tlRef.current.play()}
        onMouseLeave={() => tlRef.current.timeScale(1.4).reverse()}
-      className={`relative overflow-hidden border border-white text-white rounded-full px-20 py-2 font-medium`}
+      className={`relative overflow-hidden border border-white text-white rounded-full px-${px} py-2 font-medium`}
     >
       <span
         ref={fillRef}
