@@ -8,7 +8,7 @@ import gsap from "gsap";
 
 const ServicesSection = () => {
   const text = `I craft modern web experiences
-with smooth animations, clean UI
+with smooth animations, clean UI,
 and reliable full stack foundations.`;
   const serviceRefs = useRef([]);
   const isDesktop = useMediaQuery({ minWidth: "48rem" }); //768px

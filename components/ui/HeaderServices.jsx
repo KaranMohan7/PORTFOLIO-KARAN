@@ -50,7 +50,7 @@ const HeaderServices = ({
           className="flex flex-col justify-center gap-12 pt-16 sm:gap-16"
         >
           <p
-            className={`text-sm font-light tracking-[0.5rem] uppercase px-8 ${textColor}`}
+            className={`text-sm font-light tracking-[0.5rem] uppercase px-10 ${textColor}`}
           >
             {subTitle}
           </p>
