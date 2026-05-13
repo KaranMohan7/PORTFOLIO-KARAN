@@ -31,7 +31,7 @@ export const AnimatedTextLines = ({ text, className }) => {
         <span
           key={index}
           ref={(el) => (lineRefs.current[index] = el)}
-          className="block leading-relaxed tracking-wide text-pretty  text-xl md:text-3xl"
+          className="block leading-relaxed tracking-wide text-pretty  text-[15px] md:text-3xl"
         >
           {line}
         </span>
