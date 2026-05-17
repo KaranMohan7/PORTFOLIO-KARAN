@@ -179,7 +179,7 @@ const AboutImage = data?.data?.aboutImage;
 
   {/* Secondary CTA */}
   <Link
-    href="https://drive.google.com/file/d/1nAgebWAYJVSsl0tmiwHe5Rl-O3xisTnb/view?usp=sharing"
+    href="https://drive.google.com/file/d/1Y_hewrBilRZKwfCyjeVf7TWK4yEPmj6a/view?usp=sharing"
     target="_blank"
   >
     <Button

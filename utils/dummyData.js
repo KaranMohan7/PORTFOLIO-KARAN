@@ -118,7 +118,8 @@ export const servicesData = [
 export const techStack = [
   { text: "HTML" },
   { text: "CSS" },
-  { text: "Javascript" },
+  { text: "JavaScript" },
+  { text: "TypeScript" },
   { text: "Tailwind CSS" },
   { text: "ReactJs" },
   { text: "MERN" },

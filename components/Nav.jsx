@@ -238,7 +238,7 @@ const Nav = () => {
             >
                                           <Link
                 href={
-                  "https://drive.google.com/file/d/1nAgebWAYJVSsl0tmiwHe5Rl-O3xisTnb/view?usp=sharing"
+                  "https://drive.google.com/file/d/1Y_hewrBilRZKwfCyjeVf7TWK4yEPmj6a/view?usp=sharing"
                 }
                  target="__blank"
                 className="flex items-center gap-3"
